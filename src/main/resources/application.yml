@@ -3,11 +3,19 @@ server:
   address: 0.0.0.0
 
 spring:
+  main:
+    lazy-initialization: true
+
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://finanzas-postgres:5432/finanzasdb}
     username: ${SPRING_DATASOURCE_USERNAME:finanzas_user}
     password: ${SPRING_DATASOURCE_PASSWORD:mypassword123}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 3
+      connection-timeout: 20000
+      idle-timeout: 300000
 
   jpa:
     hibernate:
