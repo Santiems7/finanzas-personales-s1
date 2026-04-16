@@ -14,6 +14,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+        hbm2ddl:
+          create_namespaces: true
         default_schema: finanzas
         format_sql: true
     open-in-view: false
