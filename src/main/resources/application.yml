@@ -19,6 +19,7 @@ spring:
         default_schema: finanzas
         format_sql: true
     open-in-view: false
+    defer-datasource-initialization: true
 
   sql:
     init:
