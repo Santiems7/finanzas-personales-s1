@@ -1,9 +1,15 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 WORKDIR /app
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN true
+
+COPY pom.xml .
 COPY src ./src
-RUN ./mvnw -q -DskipTests package || true
+
+RUN mvn -q -DskipTests package
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+
+COPY --from=builder /app/target/*.jar app.jar
+
 EXPOSE 8080
-CMD ["sh", "-c", "./mvnw spring-boot:run"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,35 +1,35 @@
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\config\OpenApiConfig.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\config\SecurityConfig.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\controller\AuthController.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\controller\CuentaController.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\AuthResponse.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\CuentaRequest.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\CuentaResponse.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\EstadoEliminacionCuentaResponse.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\LoginRequest.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\MessageResponse.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\dto\RegisterRequest.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\Cuenta.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\CuentaTipo.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\Transaccion.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\TransaccionTipo.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\Usuario.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\UsuarioCuenta.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\UsuarioCuentaId.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\UsuarioCuentaPermiso.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\entity\UsuarioRol.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\exception\BusinessException.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\exception\GlobalExceptionHandler.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\exception\UnauthorizedException.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\FinanzasApplication.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\repository\CuentaRepository.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\repository\TransaccionRepository.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\repository\UsuarioCuentaRepository.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\repository\UsuarioRepository.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\security\CustomUserDetails.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\security\CustomUserDetailsService.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\security\JwtAuthenticationFilter.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\security\JwtService.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\security\TokenBlacklistService.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\service\AuthService.java
-C:\Users\santiems7\Documents\UdeA\Análisis y diseño de sistemas II\finanzas-personales-s1\finanzas-personales-s1\src\main\java\com\example\finanzas\service\CuentaService.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/FinanzasApplication.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/config/OpenApiConfig.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/config/SecurityConfig.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/controller/AuthController.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/controller/CuentaController.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/AuthResponse.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/CuentaRequest.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/CuentaResponse.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/EstadoEliminacionCuentaResponse.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/LoginRequest.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/MessageResponse.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/dto/RegisterRequest.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/Cuenta.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/CuentaTipo.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/Transaccion.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/TransaccionTipo.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/Usuario.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/UsuarioCuenta.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/UsuarioCuentaId.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/UsuarioCuentaPermiso.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/entity/UsuarioRol.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/exception/BusinessException.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/exception/GlobalExceptionHandler.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/exception/UnauthorizedException.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/repository/CuentaRepository.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/repository/TransaccionRepository.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/repository/UsuarioCuentaRepository.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/repository/UsuarioRepository.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/security/CustomUserDetails.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/security/CustomUserDetailsService.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/security/JwtAuthenticationFilter.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/security/JwtService.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/security/TokenBlacklistService.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/service/AuthService.java
+/home/pango/dev/Fabrica/finanzas-personales-s1/src/main/java/com/example/finanzas/service/CuentaService.java
