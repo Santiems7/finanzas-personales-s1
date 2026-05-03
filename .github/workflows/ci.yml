@@ -20,4 +20,16 @@ jobs:
           cache: maven
 
       - name: Build and test
-        run: mvn clean verify
+        run: mvn clean verify -e
+        env:
+          SPRING_PROFILES_ACTIVE: test
+
+      - name: Print surefire reports
+        if: always()
+        run: |
+          echo "===== Surefire Reports ====="
+          if [ -d target/surefire-reports ]; then
+            find target/surefire-reports -type f -name "*.txt" -print -exec cat {} \;
+          else
+            echo "No target/surefire-reports directory found"
+          fi
