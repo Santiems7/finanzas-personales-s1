@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    container_name: finanzas-postgres
+    environment:
+      POSTGRES_DB: finanzasdb
+      POSTGRES_USER: finanzas_user
+      POSTGRES_PASSWORD: "mypassword123"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./src/main/resources/db/data.sql:/docker-entrypoint-initdb.d/02-data.sql
+volumes:
+  postgres_data:
