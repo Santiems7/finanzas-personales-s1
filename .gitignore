@@ -1,0 +1,89 @@
+# =========================
+# Maven / Java build
+# =========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven wrapper - normalmente SÍ se sube si existe
+# !.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+*.tmp
+
+# =========================
+# Spring Boot / Environment
+# =========================
+.env
+.env.*
+!.env.example
+
+# Si manejan secretos reales en application-local.yml, no subirlos
+src/main/resources/application-local.yml
+src/main/resources/application-dev-local.yml
+src/main/resources/application-prod-local.yml
+
+# No ignores application.yml si es necesario para desplegar
+# src/main/resources/application.yml
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+!.vscode/settings.example.json
+!.vscode/extensions.json
+
+# =========================
+# Eclipse / STS
+# =========================
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache/
+
+# =========================
+# NetBeans
+# =========================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Test reports / coverage
+# =========================
+surefire-reports/
+failsafe-reports/
+jacoco.exec
+coverage/
+*.dump
+*.dumpstream
+
+# =========================
+# Docker local overrides
+# =========================
+docker-compose.override.yml

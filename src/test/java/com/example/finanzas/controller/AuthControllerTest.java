@@ -3,6 +3,7 @@ package com.example.finanzas.controller;
 import com.example.finanzas.dto.LoginRequest;
 import com.example.finanzas.dto.RegisterRequest;
 import com.example.finanzas.entity.Usuario;
+import com.example.finanzas.entity.UsuarioRol;
 import com.example.finanzas.repository.UsuarioRepository;
 import java.util.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,10 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class AuthControllerTest {
-    @Autowired MockMvc mockMvc;
-    @Autowired ObjectMapper objectMapper;
-    @Autowired UsuarioRepository usuarioRepository;
-    @Autowired PasswordEncoder passwordEncoder;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    ObjectMapper objectMapper;
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Test
     void registerShouldCreateUserAndDefaultAccount() throws Exception {
@@ -38,8 +43,8 @@ class AuthControllerTest {
         request.setPassword("Password1");
 
         mockMvc.perform(post("/api/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.token", notNullValue()))
                 .andExpect(jsonPath("$.nombre").value("Santiago"));
@@ -53,6 +58,9 @@ class AuthControllerTest {
         usuario.setCorreo(correo);
         usuario.setPasswordHash(passwordEncoder.encode("Password1"));
         usuario.setActivo(true);
+        usuario.setMoneda("COP");
+        usuario.setRol(UsuarioRol.USUARIO_ESTANDAR);
+
         usuarioRepository.save(usuario);
 
         LoginRequest request = new LoginRequest();
@@ -60,8 +68,8 @@ class AuthControllerTest {
         request.setPassword("Password1");
 
         mockMvc.perform(post("/api/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token", notNullValue()));
     }
@@ -74,18 +82,18 @@ class AuthControllerTest {
         register.setPassword("Password1");
 
         String response = mockMvc.perform(post("/api/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(register)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(register)))
                 .andReturn().getResponse().getContentAsString();
         String token = objectMapper.readTree(response).get("token").asText();
 
         mockMvc.perform(post("/api/auth/logout")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Sesión cerrada correctamente"));
 
         mockMvc.perform(post("/api/auth/logout")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isUnauthorized());
     }
 }
