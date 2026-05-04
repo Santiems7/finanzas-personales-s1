@@ -19,11 +19,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @ActiveProfiles("test")
+@AutoConfigureMockMvc
 class CuentaControllerTest {
-    @Autowired MockMvc mockMvc;
-    @Autowired ObjectMapper objectMapper;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    ObjectMapper objectMapper;
     private String token;
 
     @BeforeEach
@@ -34,8 +36,8 @@ class CuentaControllerTest {
         register.setPassword("Password1");
 
         String response = mockMvc.perform(post("/api/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(register)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(register)))
                 .andReturn().getResponse().getContentAsString();
         token = objectMapper.readTree(response).get("token").asText();
     }
@@ -47,9 +49,9 @@ class CuentaControllerTest {
         request.setTipo(com.example.finanzas.entity.CuentaTipo.BANCO);
 
         mockMvc.perform(post("/api/cuentas")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre").value("Bancolombia"))
                 .andExpect(jsonPath("$.tipo").value("BANCO"))
@@ -59,7 +61,7 @@ class CuentaControllerTest {
     @Test
     void listCuentasShouldReturnDefaultAccount() throws Exception {
         mockMvc.perform(get("/api/cuentas")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].tipo").value("EFECTIVO"));
@@ -72,9 +74,9 @@ class CuentaControllerTest {
         create.setTipo(com.example.finanzas.entity.CuentaTipo.AHORRO);
 
         String createResponse = mockMvc.perform(post("/api/cuentas")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(create)))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(create)))
                 .andReturn().getResponse().getContentAsString();
         Long cuentaId = objectMapper.readTree(createResponse).get("id").asLong();
 
@@ -83,9 +85,9 @@ class CuentaControllerTest {
         update.setTipo(com.example.finanzas.entity.CuentaTipo.OTRO);
 
         mockMvc.perform(put("/api/cuentas/{id}", cuentaId)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(update)))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(update)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre").value("Ahorros Editada"))
                 .andExpect(jsonPath("$.tipo").value("OTRO"));
@@ -98,15 +100,15 @@ class CuentaControllerTest {
         create.setTipo(com.example.finanzas.entity.CuentaTipo.OTRO);
 
         String createResponse = mockMvc.perform(post("/api/cuentas")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(create)))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(create)))
                 .andReturn().getResponse().getContentAsString();
         Long cuentaId = objectMapper.readTree(createResponse).get("id").asLong();
 
         mockMvc.perform(delete("/api/cuentas/{id}", cuentaId)
-                        .param("confirm", "true")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .param("confirm", "true")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Cuenta eliminada correctamente"));
     }
