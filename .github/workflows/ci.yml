@@ -25,9 +25,6 @@ jobs:
           SPRING_PROFILES_ACTIVE: test
           APP_JWT_SECRET: ${{ secrets.APP_JWT_SECRET }}
           APP_JWT_EXPIRATION_MS: ${{ secrets.APP_JWT_EXPIRATION_MS }}
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
       - name: Print surefire reports
         if: always()
