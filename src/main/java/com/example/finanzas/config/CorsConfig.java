@@ -16,10 +16,10 @@ public class CorsConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
+        config.setAllowedOriginPatterns(List.of(
                 "https://finanzas-personales-sable.vercel.app",
-                "http://localhost:5173",
-                "http://localhost:3000"));
+                "https://*.vercel.app",
+                "http://localhost:*"));
 
         config.setAllowedMethods(List.of(
                 "GET",
@@ -29,12 +29,7 @@ public class CorsConfig {
                 "DELETE",
                 "OPTIONS"));
 
-        config.setAllowedHeaders(List.of(
-                "Authorization",
-                "Content-Type",
-                "Accept",
-                "Origin",
-                "X-Requested-With"));
+        config.setAllowedHeaders(List.of("*"));
 
         config.setExposedHeaders(List.of(
                 "Authorization"));
