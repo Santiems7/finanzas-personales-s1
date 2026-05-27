@@ -35,14 +35,16 @@ public class TransaccionController {
     }
 
     @GetMapping
-    @Operation(summary = "Consultar historial de transacciones")
+    @Operation(summary = "Consultar historial y buscar transacciones")
     public ResponseEntity<List<TransaccionResponse>> history(
             @AuthenticationPrincipal CustomUserDetails user,
             @RequestParam(required = false) Long cuentaId,
             @RequestParam(required = false) Long categoriaId,
             @RequestParam(required = false) TransaccionTipo tipo,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime fechaDesde,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime fechaHasta) {
-        return ResponseEntity.ok(transaccionService.history(user.getId(), cuentaId, categoriaId, tipo, fechaDesde, fechaHasta));
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime fechaHasta,
+            @RequestParam(required = false) String descripcion) {
+        return ResponseEntity.ok(transaccionService.history(
+                user.getId(), cuentaId, categoriaId, tipo, fechaDesde, fechaHasta, descripcion));
     }
 }

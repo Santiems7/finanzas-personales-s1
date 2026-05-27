@@ -20,6 +20,12 @@ public class Presupuesto {
     @Column(name = "monto_global_limite", precision = 14, scale = 2)
     private BigDecimal montoGlobalLimite;
 
+    @Column(name = "monto_global_ejecutado", precision = 14, scale = 2)
+    private BigDecimal montoGlobalEjecutado = BigDecimal.ZERO;
+
+    @Column(name = "alerta_global_generada")
+    private boolean alertaGlobalGenerada = false;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private PresupuestoPeriodo periodo;
@@ -58,4 +64,8 @@ public class Presupuesto {
     public void setFechaCreacion(OffsetDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
     public List<PresupuestoCategoria> getCategorias() { return categorias; }
     public void setCategorias(List<PresupuestoCategoria> categorias) { this.categorias = categorias; }
+    public BigDecimal getMontoGlobalEjecutado() { return montoGlobalEjecutado; }
+    public void setMontoGlobalEjecutado(BigDecimal montoGlobalEjecutado) { this.montoGlobalEjecutado = montoGlobalEjecutado; }
+    public boolean isAlertaGlobalGenerada() { return alertaGlobalGenerada; }
+    public void setAlertaGlobalGenerada(boolean alertaGlobalGenerada) { this.alertaGlobalGenerada = alertaGlobalGenerada; }
 }

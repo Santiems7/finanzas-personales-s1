@@ -10,6 +10,8 @@ public class PresupuestoResponse {
     private Long id;
     private Long usuarioId;
     private BigDecimal montoGlobalLimite;
+    private BigDecimal montoGlobalEjecutado;
+    private BigDecimal porcentajeGlobalEjecutado;
     private PresupuestoPeriodo periodo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -22,6 +24,10 @@ public class PresupuestoResponse {
     public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
     public BigDecimal getMontoGlobalLimite() { return montoGlobalLimite; }
     public void setMontoGlobalLimite(BigDecimal montoGlobalLimite) { this.montoGlobalLimite = montoGlobalLimite; }
+    public BigDecimal getMontoGlobalEjecutado() { return montoGlobalEjecutado; }
+    public void setMontoGlobalEjecutado(BigDecimal montoGlobalEjecutado) { this.montoGlobalEjecutado = montoGlobalEjecutado; }
+    public BigDecimal getPorcentajeGlobalEjecutado() { return porcentajeGlobalEjecutado; }
+    public void setPorcentajeGlobalEjecutado(BigDecimal porcentajeGlobalEjecutado) { this.porcentajeGlobalEjecutado = porcentajeGlobalEjecutado; }
     public PresupuestoPeriodo getPeriodo() { return periodo; }
     public void setPeriodo(PresupuestoPeriodo periodo) { this.periodo = periodo; }
     public LocalDate getFechaInicio() { return fechaInicio; }

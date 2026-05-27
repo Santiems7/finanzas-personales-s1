@@ -8,9 +8,11 @@ import com.example.finanzas.repository.CategoriaRepository;
 import com.example.finanzas.repository.PresupuestoRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +81,43 @@ public class PresupuestoService {
         return toResponse(presupuesto);
     }
 
+    @Transactional
+    public Optional<PresupuestoResponse> getActivo(Long usuarioId) {
+        Optional<Presupuesto> opt = presupuestoRepository.findByUsuarioIdAndEstado(usuarioId, PresupuestoEstado.ACTIVO);
+        if (opt.isEmpty()) return Optional.empty();
+
+        Presupuesto presupuesto = opt.get();
+        if (presupuesto.getFechaFin().isBefore(LocalDate.now())) {
+            presupuesto.setEstado(PresupuestoEstado.VENCIDO);
+            presupuestoRepository.save(presupuesto);
+            crearBorradorDesde(presupuesto);
+            return Optional.empty();
+        }
+        return Optional.of(toResponse(presupuesto));
+    }
+
+    private Presupuesto crearBorradorDesde(Presupuesto plantilla) {
+        Presupuesto borrador = new Presupuesto();
+        borrador.setUsuarioId(plantilla.getUsuarioId());
+        borrador.setPeriodo(plantilla.getPeriodo());
+        borrador.setFechaInicio(plantilla.getFechaFin());
+        borrador.setFechaFin(calculateEndDate(plantilla.getFechaFin(), plantilla.getPeriodo()));
+        borrador.setMontoGlobalLimite(plantilla.getMontoGlobalLimite());
+        borrador.setEstado(PresupuestoEstado.BORRADOR);
+        borrador.setMontoGlobalEjecutado(BigDecimal.ZERO);
+        borrador.setAlertaGlobalGenerada(false);
+        for (PresupuestoCategoria pc : plantilla.getCategorias()) {
+            PresupuestoCategoria nueva = new PresupuestoCategoria();
+            nueva.setPresupuesto(borrador);
+            nueva.setCategoriaId(pc.getCategoriaId());
+            nueva.setMontoLimite(pc.getMontoLimite());
+            nueva.setMontoEjecutado(BigDecimal.ZERO);
+            nueva.setAlertaGenerada(false);
+            borrador.getCategorias().add(nueva);
+        }
+        return presupuestoRepository.save(borrador);
+    }
+
     private void validateCategoryLimits(Long usuarioId, PresupuestoRequest request) {
         BigDecimal total = BigDecimal.ZERO;
         Set<Long> seen = new HashSet<>();
@@ -115,6 +154,9 @@ public class PresupuestoService {
         response.setId(presupuesto.getId());
         response.setUsuarioId(presupuesto.getUsuarioId());
         response.setMontoGlobalLimite(presupuesto.getMontoGlobalLimite());
+        response.setMontoGlobalEjecutado(presupuesto.getMontoGlobalEjecutado());
+        response.setPorcentajeGlobalEjecutado(calcularPorcentaje(
+                presupuesto.getMontoGlobalEjecutado(), presupuesto.getMontoGlobalLimite()));
         response.setPeriodo(presupuesto.getPeriodo());
         response.setFechaInicio(presupuesto.getFechaInicio());
         response.setFechaFin(presupuesto.getFechaFin());
@@ -129,6 +171,13 @@ public class PresupuestoService {
         response.setCategoriaId(pc.getCategoriaId());
         response.setMontoLimite(pc.getMontoLimite());
         response.setMontoEjecutado(pc.getMontoEjecutado());
+        response.setPorcentajeEjecutado(calcularPorcentaje(pc.getMontoEjecutado(), pc.getMontoLimite()));
         return response;
+    }
+
+    private BigDecimal calcularPorcentaje(BigDecimal ejecutado, BigDecimal limite) {
+        if (limite == null || limite.compareTo(BigDecimal.ZERO) == 0) return null;
+        return ejecutado.multiply(BigDecimal.valueOf(100))
+                .divide(limite, 2, RoundingMode.HALF_UP);
     }
 }

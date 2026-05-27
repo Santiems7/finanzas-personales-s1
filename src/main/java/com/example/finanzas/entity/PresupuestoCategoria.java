@@ -23,6 +23,9 @@ public class PresupuestoCategoria {
     @Column(name = "monto_ejecutado", nullable = false, precision = 14, scale = 2)
     private BigDecimal montoEjecutado = BigDecimal.ZERO;
 
+    @Column(name = "alerta_generada")
+    private boolean alertaGenerada = false;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Presupuesto getPresupuesto() { return presupuesto; }
@@ -33,4 +36,6 @@ public class PresupuestoCategoria {
     public void setMontoLimite(BigDecimal montoLimite) { this.montoLimite = montoLimite; }
     public BigDecimal getMontoEjecutado() { return montoEjecutado; }
     public void setMontoEjecutado(BigDecimal montoEjecutado) { this.montoEjecutado = montoEjecutado; }
+    public boolean isAlertaGenerada() { return alertaGenerada; }
+    public void setAlertaGenerada(boolean alertaGenerada) { this.alertaGenerada = alertaGenerada; }
 }

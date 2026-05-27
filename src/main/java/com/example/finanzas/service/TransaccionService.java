@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,17 +24,20 @@ public class TransaccionService {
     private final CategoriaRepository categoriaRepository;
     private final PresupuestoRepository presupuestoRepository;
     private final PresupuestoCategoriaRepository presupuestoCategoriaRepository;
+    private final NotificacionService notificacionService;
 
     public TransaccionService(TransaccionRepository transaccionRepository,
                               CuentaRepository cuentaRepository,
                               CategoriaRepository categoriaRepository,
                               PresupuestoRepository presupuestoRepository,
-                              PresupuestoCategoriaRepository presupuestoCategoriaRepository) {
+                              PresupuestoCategoriaRepository presupuestoCategoriaRepository,
+                              NotificacionService notificacionService) {
         this.transaccionRepository = transaccionRepository;
         this.cuentaRepository = cuentaRepository;
         this.categoriaRepository = categoriaRepository;
         this.presupuestoRepository = presupuestoRepository;
         this.presupuestoCategoriaRepository = presupuestoCategoriaRepository;
+        this.notificacionService = notificacionService;
     }
 
     @Transactional
@@ -61,7 +65,7 @@ public class TransaccionService {
             cuenta.setSaldo(cuenta.getSaldo().add(monto));
         } else if (request.getTipo() == TransaccionTipo.EGRESO) {
             cuenta.setSaldo(cuenta.getSaldo().subtract(monto));
-            imputarPresupuestoActivo(usuarioId, categoria.getId(), monto);
+            imputarPresupuestoActivo(usuarioId, categoria, monto);
         }
 
         Transaccion transaccion = new Transaccion();
@@ -83,7 +87,11 @@ public class TransaccionService {
                                              Long categoriaId,
                                              TransaccionTipo tipo,
                                              OffsetDateTime fechaDesde,
-                                             OffsetDateTime fechaHasta) {
+                                             OffsetDateTime fechaHasta,
+                                             String descripcion) {
+        if (fechaDesde != null && fechaHasta != null && fechaDesde.isAfter(fechaHasta)) {
+            throw new BusinessException("La fecha de inicio no puede ser posterior a la fecha de fin");
+        }
         if (cuentaId != null) {
             cuentaRepository.findOwnedByUsuarioId(usuarioId, cuentaId)
                     .orElseThrow(() -> new UnauthorizedException("La cuenta no existe o no pertenece al usuario"));
@@ -92,7 +100,10 @@ public class TransaccionService {
             categoriaRepository.findVisibleByUser(usuarioId, categoriaId)
                     .orElseThrow(() -> new UnauthorizedException("La categoría no existe o no pertenece al usuario"));
         }
-        return transaccionRepository.findHistorial(usuarioId, cuentaId, categoriaId, tipo, fechaDesde, fechaHasta)
+        String descripcionPattern = (descripcion != null && !descripcion.isBlank())
+                ? "%" + descripcion.toLowerCase().trim() + "%" : null;
+        return transaccionRepository.findHistorial(usuarioId, cuentaId, categoriaId, tipo,
+                        fechaDesde, fechaHasta, descripcionPattern)
                 .stream().map(t -> toResponse(t, null)).toList();
     }
 
@@ -114,14 +125,22 @@ public class TransaccionService {
         }
     }
 
-    private void imputarPresupuestoActivo(Long usuarioId, Long categoriaId, BigDecimal monto) {
+    private void imputarPresupuestoActivo(Long usuarioId, Categoria categoria, BigDecimal monto) {
         presupuestoRepository.findByUsuarioIdAndEstado(usuarioId, PresupuestoEstado.ACTIVO)
-                .ifPresent(presupuesto -> presupuestoCategoriaRepository
-                        .findByPresupuestoIdAndCategoriaId(presupuesto.getId(), categoriaId)
-                        .ifPresent(pc -> {
-                            pc.setMontoEjecutado(pc.getMontoEjecutado().add(monto));
-                            presupuestoCategoriaRepository.save(pc);
-                        }));
+                .ifPresent(presupuesto -> {
+                    presupuesto.setMontoGlobalEjecutado(presupuesto.getMontoGlobalEjecutado().add(monto));
+                    presupuestoRepository.save(presupuesto);
+
+                    Optional<PresupuestoCategoria> optPc = presupuestoCategoriaRepository
+                            .findByPresupuestoIdAndCategoriaId(presupuesto.getId(), categoria.getId());
+                    optPc.ifPresent(pc -> {
+                        pc.setMontoEjecutado(pc.getMontoEjecutado().add(monto));
+                        presupuestoCategoriaRepository.save(pc);
+                    });
+
+                    notificacionService.evaluarAlertas(usuarioId, presupuesto,
+                            optPc.orElse(null), categoria.getNombre());
+                });
     }
 
     private String blankToNull(String value) {
